@@ -26,7 +26,18 @@ my $extend = 50;
 # sheet. If you specify this option, the bare values are shown.
 my $bare = '';
 
-GetOptions('pixels=i' => \$pixels, 'extend=f' => \$extend, 'bare' => \$bare);
+# Normally the circle begins at 90 degrees (3'o clock). You can set another
+# value (in degrees) with this option.
+my $startAngle = 90;
+
+# Mainly for debugging: Show the angles that are computed.
+my $showAngles = 0;
+
+my $clockwise = 1;
+
+GetOptions('angle=i' => \$startAngle, 'clockwise!' => \$clockwise,
+  'pixels=i' => \$pixels, 'extend=f' => \$extend, 'bare' => \$bare,
+  'showangles' => \$showAngles);
 
 $usage = "Usage: $0 <count>\n";
 
@@ -45,7 +56,6 @@ if($bare) {
 $center = 50;
 $offset = $extend / 2;
 
-$clockwise = 1;
 $count = $ARGV[0];
 #??$xextend = $yextend = $ARGV[1];
 
@@ -53,7 +63,7 @@ $pi = (atan2(1, 1) * 4);
 $fullcircle = 2 * $pi;
 $step = $fullcircle / $count;
 
-$startAngle = grad2rad(90);
+$startAngle = grad2rad($startAngle);
 #??print $startAngle;
 
 #??printf "Step: %d\n", rad2grad($step);
@@ -72,7 +82,9 @@ else {
   }
 }
 
-#??print map { rad2grad($_) } @angles;
+if($showAngles) {
+  print map { rad2grad($_)." " } @angles; print("\n\n");
+}
 
 $count = 0;
 foreach $angle (@angles) { 
