@@ -100,10 +100,10 @@ sub writeCss {
   my $y = shift;
   my $count = shift;
 
-  print("li.$count {\n");
-  print("  position: absolute\n");
-  print("  left: $x\n");
-  print("  bottom: $y\n");
+  print("li.c$count {\n");
+  print("  position: absolute;\n");
+  print("  left: $x%;\n");
+  print("  bottom: $y%;\n");
   print("}\n");
 }
 
