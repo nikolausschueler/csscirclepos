@@ -26,7 +26,7 @@ my $extend = 50;
 # sheet. If you specify this option, the bare values are shown.
 my $bare = '';
 
-# Normally the circle begins at 90 degrees (3'o clock). You can set another
+# Normally the circle begins at 90 degrees (12 o'clock). You can set another
 # value (in degrees) with this option.
 my $startAngle = 90;
 
@@ -115,7 +115,7 @@ sub writeCss {
   print("li.c$count {\n");
   print("  position: absolute;\n");
   print("  left: $x%;\n");
-  print("  bottom: $y%;\n");
+  print("  top: $y%;\n");
   print("}\n");
 }
 
