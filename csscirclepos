@@ -57,7 +57,9 @@ foreach $angle (@angles) {
     my $cos = cos($angle);
     #??print "Sin: $sin, Cos: $cos\n";
     my $x = $center + $offset * $cos;
-    my $y = $center + $offset * $sin;
+    
+    # In the stylesheet we use left and top, so invert this value.
+    my $y = 100 - ($center + $offset * $sin);
 
     # Simply printing as integers just truncates, so we round.
     printf "%d, %d\n", round($x), round($y);
