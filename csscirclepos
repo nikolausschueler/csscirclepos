@@ -1,0 +1,82 @@
+#!/usr/bin/perl -w
+
+# This computes positions for a CSS stylesheet that arranges links in a circle.
+# Copy and paste the values into a stylesheet.
+# TODO: 
+# - document this.
+# - make offset etc. parameters? Make different extends for x and y directions?
+# - emit CSS code?
+# - Move functions to lib?
+#
+# Note: The values for $center etc. are percent values.
+
+$usage = "Usage: $0 <count> <extend>\n";
+
+if(scalar(@ARGV) != 2) {
+    print $usage;
+    exit(1);
+}
+
+
+# Those are percent values:
+$center = 50;
+$extend = $ARGV[1];
+$offset = $extend / 2;
+
+$clockwise = 1;
+$count = $ARGV[0];
+#??$xextend = $yextend = $ARGV[1];
+
+$pi = (atan2(1, 1) * 4);
+$fullcircle = 2 * $pi;
+$step = $fullcircle / $count;
+
+$startAngle = grad2rad(90);
+#??print $startAngle;
+
+#??printf "Step: %d\n", rad2grad($step);
+
+my @angles;
+if($clockwise) {
+    for($angle = $startAngle; $angle > $startAngle - $fullcircle; $angle -= $step) {
+	#??printf "Angle: %d\n", rad2grad($angle);
+	push(@angles, $angle);
+    }
+}
+else {
+    for($angle = $startAngle; $angle < $startAngle + $fullcircle; $angle += $step) {
+	#??printf "Angle: %d\n", rad2grad($angle);
+	push(@angles, $angle);
+    }
+}
+
+#??print map { rad2grad($_) } @angles;
+
+foreach $angle (@angles) { 
+    my $sin = sin($angle);
+    my $cos = cos($angle);
+    #??print "Sin: $sin, Cos: $cos\n";
+    my $x = $center + $offset * $cos;
+    my $y = $center + $offset * $sin;
+
+    # Simply printing as integers just truncates, so we round.
+    printf "%d, %d\n", round($x), round($y);
+}
+
+sub grad2rad {
+    my $grad = shift;
+    return 
+	$grad *
+	$pi /
+	180;
+}
+
+sub rad2grad {
+    my $rad = shift;
+    return $rad * 180 / $pi;
+}
+
+sub round {
+    my $f = shift;
+    return sprintf("%.0f", $f);
+}
