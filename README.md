@@ -1,5 +1,5 @@
 # csscirclepos
-Perl scipt that generates CSS for circular arrangment of links
+Perl scipt that generates CSS for circular arrangement of links
 
 # What is this?
 
